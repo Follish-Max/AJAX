@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AJAX基础</title>
+</head>
+<body>
+<!--AJAX可以通过javaScript直接获取服务端的最新数据而不必重新加载页面，也就是说：AJAX就是浏览器
+提供的一套API，可以通过JavaScript调用，从而实现代码控制请求与相应，实现网络编程-->
+<script>
+    //XMLHttpRequest
+    /*创建一个XMLHttpRequest类型的对象*/
+    var xhr = new XMLHttpRequest()
+    /*打开一个连接，相当于在地址栏中输入访问地址*/
+    xhr.open('GET','./time.php')
+    /*通过连接发送一次请求，相当于回车或者点击访问发送请求*/
+    xhr.send()
+    /*状态变化事件处理函数*/
+    xhr.onreadystatechange = function () {
+        if(this.readyState !== 4) return
+        /*获取响应的内容（响应体）
+        当readyState等于4的时候执行下面代码*/
+        console.log(this.responseText)
+        
+    }
+</script>
+</body>
+</html>

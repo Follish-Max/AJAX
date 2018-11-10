@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>响应状态</title>
+</head>
+<body>
+<script>
+    var xhr = new XMLHttpRequest()
+    console.log(xhr.readyState)
+    /*=> 0 ,初始化，请求代理对象*/
+    xhr.open('GET','./time.php')
+    console.log(xhr.readyState)
+    /*=> 1 调用open方法，建立一个与服务器特定端口的连接*/
+    xhr.send()
+    xhr.addEventListener('readystatechange',function () {
+        switch (this.readyState) {
+            case 2:
+                /*接收到了请求报文*/
+                //获取请求头内容
+                console.log(this.getAllResponseHeaders())
+                //获取请求头中具体的某一项
+                console.log(this.getResponseHeader('server'))
+                //此时还没有拿到响应体
+                console.log(this.responseText)
+                break
+            case 3:
+                /*正在下载响应报文的响应体，不一定完整*/
+                //这里处理响应体不保险，数据量大了不一定额能下载完
+                console.log(this.responseText)
+                break
+            case 4:
+                /*一切OK,执行响应的后续逻辑*/
+                console.log(this.responseText)
+                break
+        }
+
+    })
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>请求数据并传递参数</title>
+</head>
+<body>
+<ul id="list"></ul>
+<script>
+    var listElement = document.getElementById('list')
+
+    var xhr = new XMLHttpRequest()
+
+    xhr.open('GET','users.php')
+
+    xhr.send()
+
+    xhr.onreadystatechange = function () {
+        if(this.readyState !== 4) return
+        var data = JSON.parse(this.responseText)
+
+    }
+
+
+
+/*    var xhr = new XMLHttpRequest()
+
+    xhr.open('GET','users.php?id=1');
+
+    xhr.send();
+
+    xhr.onreadystatechange = function () {
+        if(this.readyState !== 4) return
+        console.log(this.responseText)
+    }*/
+
+
+
+</script>
+</body>
+</html>

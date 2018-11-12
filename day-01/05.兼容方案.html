@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>兼容方案</title>
+</head>
+<body>
+<scaript>
+    <!--XMLHttpRequest在老版本浏览器（IE5/6）中有兼容问题，可以通过一下方式兼容-->
+    var xhr = window.XMLHttpRequest ?
+    new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHttpRequest')
+
+</scaript>
+</body>
+</html>

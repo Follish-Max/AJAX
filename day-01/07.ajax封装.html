@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AJAX封装</title>
+</head>
+<body>
+<script>
+
+    function ajax(options){
+        var xhr = null;
+        var params = formsParams(options.data);
+        //创建对象
+        if(window.XMLHttpRequest){
+            xhr = new XMLHttpRequest()
+        } else {
+            xhr = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        // 连接
+        if(options.type === "GET"){
+            xhr.open(options.type,options.url + "?"+ params,options.async);
+            xhr.send(null)
+        } else if(options.type === "POST"){
+            xhr.open(options.type,options.url,options.async);
+            xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+            xhr.send(params);
+        }
+        //HTTP状态码
+        /*200 OK 客户端请求成功
+        * 400 Bad Request 客户端请求语法有错误，不能被服务器所理解
+        * 403 Forbidden 服务器收到请求，但是拒绝提供服务
+        * 404 Not Found 请求资源不存在，输入了错误的URL
+        * 500 Internal Server Error 服务器发生了不可预期的错误
+        * 503 Server Unavailable 服务器当前不能处理客户端的请求，一段时间后可能恢复正常*/
+
+        xhr.onreadystatechange = function(){
+            if(xhr.readyState === 4 && xhr.status === 200){
+                options.success(xhr.responseText);
+            }
+        }
+        function formsParams(data){
+            var arr = [];
+            for(var prop in data){
+                arr.push(prop + "=" + data[prop]);
+            }
+            return arr.join("&");
+        }
+
+    }
+
+    ajax({
+        url : "time.php",  // url---->地址
+        type : "POST",   // type ---> 请求方式
+        async : true,   // async----> 同步：false，异步：true
+        data : {        //传入信息
+            name : "张三",
+            age : 18
+        },
+        success : function(data){   //返回接受信息
+            console.log(data);
+        }
+    })
+
+
+</script>
+</body>
+</html>

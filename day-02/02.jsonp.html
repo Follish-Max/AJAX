@@ -5,6 +5,63 @@
     <title>JSONP(JSON with Padding)</title>
 </head>
 <body>
+    <!--JSONP是JSON with padding的简写-->
+    <!--
+    jsonp实现跨域请求的原理：动态创建<script>标签，然后利用<script>的src不受同源策略约束来跨域获取数据
+    jsonp由两部分组成：回调函数的数据，回调函数是当响应到来时应该在页面中调用的函数，回调函数的名字一般实在请求中置顶的
+    而数据就是传入回调函数的json数据。
+    -->
 
+    <div id="mydiv">
+        <button id="btn">点击</button>
+    </div>
+    <!--通过ajax请求会出错，如下：-->
+<!--    <script type="text/javascript">
+        window.onload = function() {
+
+            var oBtn = document.getElementById('btn');
+
+            oBtn.onclick = function() {
+
+                var xhr = new XMLHttpRequest();
+
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState == 4 && xhr.status == 200) {
+                        alert( xhr.responseText );
+                    }
+                };
+
+                xhr.open('get', 'https://api.douban.com/v2/book/search?q=javascript&count=1', true);
+                xhr.send();
+            };
+
+        };
+    </script>-->
+
+    <script type="text/javascript">
+        function handleResponse(response){
+            console.log(response);
+        }
+    </script>
+    <script type="text/javascript">
+        window.onload = function() {
+
+            var oBtn = document.getElementById('btn');
+
+            oBtn.onclick = function() {
+                //动态创建<script>标签，设置其src，回调函数在src中设置：
+                var script = document.createElement("script");
+                script.src = "https://api.douban.com/v2/book/search?q=javascript&count=1&callback=handleResponse";
+                document.body.insertBefore(script, document.body.firstChild);
+            };
+        };
+    </script>
+        <!--
+        JSONP目前还是比较流行的跨域方式，虽然比较方便，但是也存在一些问题：
+        首先，JSONP是从其他的域中加载代码执行，如果其他域不安全，就有可能在响应中夹带一些恶意代码
+         ；而这种情况下除了完全放弃JSONP调用外，没有其他方法追究，因此会不安全。
+         其次，确定JSONP请求是否失败也不容易，HTML5中虽然给<script>元素添加了一个onerror时间
+         处理程序，但目前还没有得到任何浏览器的支持，为此，只能使用计时器来检测指定时间内是否收到了响应。
+        -->
 </body>
 </html>

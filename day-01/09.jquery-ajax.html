@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>jquery中的ajax</title>
+</head>
+<body>
+<script>
+
+    $.get('json.php',{id:1},function (res) {
+        console.log(res)
+    })
+    $.post('json.php',{id:1},function (res) {
+        console.log(res)
+    })
+    $.getJSON('json',{id:1},function (res) {
+        console.log(res)
+    })
+
+</script>
+</body>
+</html>
